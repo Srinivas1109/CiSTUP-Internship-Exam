@@ -1,7 +1,7 @@
 <!-- help me to write readme -->
 # Cistup Internship
 ## Introduction
-This is a project for internship in CiSTUP company. The website is built with ReactJS. The website is deployed on Github. The website is available at https://cistup-internship-1.herokuapp.com/
+This is a project for internship in CiSTUP company. The website is built with ReactJS. The website is deployed on Github. The website is available at http://Srinivas1109.github.io/CiSTUP-Internship-Exam
 
 ## Installation
 1. Clone the repository
