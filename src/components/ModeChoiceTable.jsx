@@ -22,9 +22,12 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 const ModeChoiceTable = ({ questions, answers }) => {
   const cols = 5;
 
+  // store the modes of each column baesd on the responses of the questions
   const col_modes = ["mode_1", "mode_2", "mode_4"];
 
   const [question_1, question_2] = questions;
+
+  // get the answer of the first and second questions
   let question_1_answer =
     question_1.choices[answers.find((q) => q.questionNo == 0).optionNo];
   let question_2_answer =
@@ -32,6 +35,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
 
   let db = null;
 
+  // get the database based on the answer of the second question
   switch (question_2_answer) {
     case "< 5 km":
       db = db_0km.Data[0];
@@ -57,6 +61,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
       break;
   }
 
+  // get the icon based on the mode
   const getIcon = (mode, dbreq) => {
     const key = dbreq ? db[mode] : mode;
     switch (key) {
@@ -102,8 +107,8 @@ const ModeChoiceTable = ({ questions, answers }) => {
         return null;
     }
   };
-  //   console.log("db: ", db, "q2: ", question_2_answer)
 
+  // get the row 1 element to display radio button and mode name
   const Row1Element = ({ mode }) => {
     return (
       <>
@@ -118,6 +123,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     );
   };
 
+  // render the row 1 using the above function
   const getRow1 = () => {
     let col_4 = [
       <Row1Element mode={"mode_9"} />,
@@ -167,7 +173,8 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row1;
   };
 
-  const Row2Element = ({ icons, mode }) => {
+  // row 3 element to display the icons and total travel time inside a vehicle(s)
+  const Row3Element = ({ icons, mode }) => {
     return (
       <div>
         {icons.map((icon, index) => {
@@ -186,15 +193,16 @@ const ModeChoiceTable = ({ questions, answers }) => {
     );
   };
 
+  // render the row 3 using the above function
   const getRow3 = () => {
     let col_1 = null;
     if (db[col_modes[0]].trans === 0) {
       col_1 = (
-        <Row2Element icons={[getIcon(col_modes[0], true)]} mode={col_modes[0]} />
+        <Row3Element icons={[getIcon(col_modes[0], true)]} mode={col_modes[0]} />
       );
     } else {
       col_1 = (
-        <Row2Element
+        <Row3Element
           icons={[getIcon(col_modes[0], true), getIcon(col_modes[0], true)]}
           mode={col_modes[0]}
         />
@@ -202,17 +210,17 @@ const ModeChoiceTable = ({ questions, answers }) => {
     }
 
     let col_2 = (
-      <Row2Element icons={[getIcon(col_modes[1], true)]} mode={col_modes[1]} />
+      <Row3Element icons={[getIcon(col_modes[1], true)]} mode={col_modes[1]} />
     );
     // console.log("col_modes[2]: ", col_modes[2]);
     let col_3 = (
-      <Row2Element icons={[getIcon(col_modes[2], true)]} mode={col_modes[2]} />
+      <Row3Element icons={[getIcon(col_modes[2], true)]} mode={col_modes[2]} />
     );
     let col_4 = (
-      <Row2Element icons={[getIcon(col_modes[3], true)]} mode={col_modes[3]} />
+      <Row3Element icons={[getIcon(col_modes[3], true)]} mode={col_modes[3]} />
     );
     let col_5 = (
-      <Row2Element icons={[getIcon(col_modes[4], true)]} mode={col_modes[4]} />
+      <Row3Element icons={[getIcon(col_modes[4], true)]} mode={col_modes[4]} />
     );
 
     const row3 = [col_1, col_2, col_3, col_4, col_5];
@@ -220,6 +228,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row3;
   };
 
+  //row 5 element to display the icons and total travel time outside a vehicle(s) by adding wait time and walk time
   const getRow5 = () => {
     const row5 = [];
     for (let i = 0; i < 5; i++) {
@@ -233,6 +242,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row5;
   };
 
+  //row 7 element to display the possible delay time
   const getRow7 = () => {
     const row6 = [];
     for (let i = 0; i < 5; i++) {
@@ -242,6 +252,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row6;
   };
 
+  //row 9 element to display the total cost
   const getRow9 = () => {
     const row9 = [];
     for (let i = 0; i < 5; i++) {
@@ -251,6 +262,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row9;
   };
 
+  //row 11 element to display the crowd info
   const Row11Element = ({ icons, text }) => {
     return (
       <div>
@@ -263,6 +275,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     );
   };
 
+  // render the row 11 using the above function
   const getRow11 = () => {
     const getCrowdInfo = (mode) => {
       switch (mode) {
@@ -292,6 +305,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
     return row11;
   };
 
+  //row 13 element to display the service type
   const getRow13 = () => {
     const getServiceType = (mode) => {
       switch (mode) {
@@ -353,18 +367,7 @@ const ModeChoiceTable = ({ questions, answers }) => {
       <tr key={"row-12"}>{renderCols(true, "Service type", null)}</tr>,
       <tr key={"row-13"}>{renderCols(false, "", getRow13())}</tr>,
     ];
-    // const rowsArr = [getRow1()];
-    // for (let i = 0; i < rows; i++) {
-    //   const merge = cellsToBeMerged.includes(i);
-    //   rowsArr.push(
-    //     <tr key={i}>
-    //       {renderCols(
-    //         cellsToBeMerged.includes(i),
-    //         merge ? displayMessages[cellsToBeMerged.indexOf(i)] : ""
-    //       )}
-    //     </tr>
-    //   );
-    // }
+
     return rowsArr;
   };
 

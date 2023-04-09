@@ -1,6 +1,7 @@
 import React from "react";
 import Choice from "./Choice";
 
+// component for each question to be rendered along with its options
 const Question = ({ questionNo, question, options, onSubmit }) => {
     const handleOnChange = (qNo, oNo)=>{
         onSubmit((prev) => {

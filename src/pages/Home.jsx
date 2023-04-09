@@ -4,24 +4,20 @@ import Question from "../components/Question";
 import ModeChoiceTable from "../components/ModeChoiceTable";
 
 const Home = () => {
-  const [answers, setAnswers] = useState([
-    {
-      questionNo: 1,
-      optionNo: 0,
-    },
-    {
-      questionNo: 0,
-      optionNo: 4,
-    },
-  ]);
-  const [showModeChoice, setShowModeChoice] = useState(true);
+  // initialize state for answers as an empty array
+  const [answers, setAnswers] = useState([]);
 
+  // initialize state for showModeChoice as false
+  const [showModeChoice, setShowModeChoice] = useState(false);
+
+  // set document title based on showModeChoice state
   useEffect(() => {
     document.title = showModeChoice
       ? "Mode choice"
       : "Respondent Travel profile";
   }, [showModeChoice]);
 
+  // map questions to Question component
   const questionElements = questions.map((q, index) => (
     <Question
       question={q.question}
@@ -46,7 +42,6 @@ const Home = () => {
             >
               &lt; Back
             </button>
-            {/* {JSON.stringify(answers)} */}
           </div>
         </div>
       ) : (
@@ -63,7 +58,6 @@ const Home = () => {
             >
               Next &gt;
             </button>
-            {/* {JSON.stringify(answers)} */}
           </div>
         </div>
       )}
